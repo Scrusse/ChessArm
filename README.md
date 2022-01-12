@@ -4,9 +4,7 @@ A robot arm that can move chess pieces to a desired location on a chess board.
 
 code as of january 12th
 
-''' code
 
-  //establish array
 
         int cols=12;
         int rows=8;
@@ -76,4 +74,3 @@ code as of january 12th
       //if move works then return true
       //else return false)
 
-'''
