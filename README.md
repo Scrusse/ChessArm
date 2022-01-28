@@ -16,17 +16,27 @@ In this project, I didn't want to just brush by the designing aspect and rip som
 
 The images below are of the pawn, the first piece I made. I made this completely from scratch using no reference images. Splines, while they are the worst lines in existance, were my only choice here. I just messed around with some ovals and splines and got what is shown here.
 
-<img src="ChessPieces/3Dpawn.PNG" alt="pawn">
+![Pawn](ChessPieces/3Dpawn.png)
 
 This is the bishop. It uses the same base as the pawn and with a stretched out body. The top is pointed and has another smaller tip on it's head. There is a cut through the head that is made by creating a sketch seperate from the original one and removing material from that one section in a straight line (as opposed to a revolved one).
 
+![Bishop](ChessPieces/3Dbishop.png)
+
 This is the knight. It looks pretty scuffed because of the fact that I couldn't revolve it so I had to use a reference image. I think that it would be far worse without the fillets, but it still could look better.
+
+![Knight](ChessPieces/3Dknight.png)
 
 The rook is one of my favorites. Originally, the three indents seen on the top, middle, and base weren't there and, personally, I think they somehow made it way better. Note to self: things look better with more random details (sometimes). The top was pretty straight forward. I created a sketch on the very top flat surface of the cup shape and made two lines pointing at different angles coming from the center of the circle. After extruding that, I did a circular feature pattern. Fillets make everything looks nicer, so that was the final touch.
 
+![Rook](ChessPieces/3Drook.png)
+
 The third piece I made, the queen, was no doubt the hardest. While the main sketch design was all freestyle, the bumps on the crown were very challenging. I had to create a new plane that is the same angle as the crown, and then make a cut through the crown at the same angle it is pointing. After that I just repeated what I did with the rook and did a circular feature pattern. Not only did I make a pattern for the crown, but I decided to make one for the tip of the head. Because it was rounded, I had to make an offset plane that was right above the top of the queen and then make a sketch that fits what I needed it to. After that, extruded it to cut through the whole top and no more and then did a circular mattern once again.
 
+![Queen](ChessPieces/3Dqueen.png)
+
 For the king, I think I had a really good idea. The plan was to make the crown be hollow in the middle with bar shapes surrounding it. I had to first, create a hole in the sketch before revolving it. This way, it wouldn't look hollow when first revolving it, but I would be able to cut out rectangles from the outside and reveal the hollowed inside. So next, I had to make another plane with a specific angle that was facing the the crown. I made a sketch that fit the crown and then extruded it and created a pattern around. For the plus sign on top of the crown, I couldnt include it in the revolve. So, what I had to do was just extrude it serparately. 
+
+![King](ChessPieces/3Dking.png)
 
 ### Robot Arm & Box
 
