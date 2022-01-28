@@ -68,7 +68,7 @@ Written by @Ashanks70
 <br>
         <details>
         <summary>January 12th</summary>
-'''
+                
         //establish array
         PImage wpawn;
         int cols=12;
@@ -185,7 +185,6 @@ Written by @Ashanks70
 </details>
  <details>
         <summary>January 28th(Almost right)</summary>
-'''
          
          int cols=12;
                 int rows=8;
@@ -384,6 +383,4 @@ Written by @Ashanks70
         }
         }
         }
-                                             
-'''
 </details>
