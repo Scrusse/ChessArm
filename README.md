@@ -59,6 +59,8 @@ This is the gear and rack together.
 
 The sketch for the rack is shown below.
 
+![Rack Sketch](ChessPieces/RackSketch.png)
+
 These are all of the variables I used for the rack.
 
 
