@@ -1,9 +1,29 @@
-# ChessArm
-A robot arm that can move chess pieces to a desired location on a chess board.
+# Chess Robot Arm
+### Table of Contents
+
+* [CAD Section](#CAD-Section)
+* [Chess Pieces](#Chess-Pieces)
+* [Coding Section](#Coding-Section)
+
+## Cad Section
+
+### Chess Pieces
+
+In this project, I didn't want to just brush by the designing aspect and rip some chess piece designs off the internet. I wanted to actually try to design my own. Not only would it make it more legit, but it would be fun and give me good practice with Onshape. So that is exactly what I did. Using the revolve tool, I could create a 2d sketch of a chess piece cut in half. All I would have to do is revolve it around the center construction line and the sketch would become a chess piece. There were some complications with the parts of the special pieces where I would have to create a seperate sektch on a seperate plane to remove sections from parts of pieces. Another complication was the knight. Of course, the knight isn't a symmetrical piece and couldn't use the revolve tool. My solution? Create a base using the revolve tool and then extrude a flat sketch onto it. Did it look good? Not exactly, but I think the unicorn horn made up for it.
+
+The image below is a pawn, the first piece I made. I made this completely from scratch using no reference images. 
 
 
-code as of january 12th
+## Coding Section
 
+Written by @Ashanks70
+
+<details>
+<summary>Code</summary>
+<br>
+        <details>
+        <summary>January 12th</summary>
+                
 
         //establish array
         PImage wpawn;
@@ -117,3 +137,5 @@ code as of january 12th
         //if piece == rook...
         //if move works then return true
         //else return false)
+
+</details>
