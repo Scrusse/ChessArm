@@ -1,6 +1,7 @@
 # Chess Robot Arm
 ### Table of Contents
 
+* [Requirements](#Requirements)
 * [CAD Section](#CAD-Section)
 * [Chess Pieces](#Chess-Pieces)
 * [Robot Arm & Box](#Robot-Arm-&-Box)
@@ -11,9 +12,17 @@
 
 ## Requirements
 
+This project has a very simple list of requirements including:
 
-
-
+- Arduino Uno(or similar device)
+- 3D Printer
+- Laser Cutter
+- 32 Small Neodymium Magnets
+- Adhesive Felt Sheet
+- Spray Paint
+- Solenoid
+- 3-4 Stepper motors
+- Nuts and Bolts
 
 ## Cad Section
 
