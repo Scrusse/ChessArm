@@ -54,6 +54,9 @@ The gear has probably given me the most problems so far. Getting a gear to fit p
 
 This is the gear and rack together.
 
+![Rack and Pinion](ChessPieces/RackAndPinion.png)
+
+
 The sketch for the rack is shown below.
 
 These are all of the variables I used for the rack.
