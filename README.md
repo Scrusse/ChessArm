@@ -48,7 +48,7 @@ Written by @Ashanks70
 <br>
         <details>
         <summary>January 12th</summary>
-                
+'''
         //establish array
         PImage wpawn;
         int cols=12;
@@ -162,4 +162,208 @@ Written by @Ashanks70
         //if move works then return true
         //else return false)
 
+</details>
+ <details>
+        <summary>January 28th(Almost right)</summary>
+'''
+         
+         int cols=12;
+                int rows=8;
+                int[][] board;
+                int cellSize = 100;
+                int turn =0;
+                int valid = 1;
+                int selectedi = 0;
+                int selectedj = 0;
+                PImage wpawn;
+                PImage wrook;
+                PImage wnite;
+                PImage wbishop;
+                PImage wking;
+                PImage wqueen;
+                PImage bpawn;
+                PImage brook;
+                PImage bnite;
+                PImage bbishop;
+                PImage bking;
+                PImage bqueen;
+                void setup(){
+                wpawn=loadImage("wpawn.png");
+                wrook=loadImage("wrook.png");
+                wnite=loadImage("wnite.png");
+                wbishop=loadImage("wbishop.png");
+        wking=loadImage("wking.png");
+        wqueen=loadImage("wqueen.png");
+        bpawn=loadImage("bpawn.png");
+        brook=loadImage("brook.png");
+        bnite=loadImage("bnite.png");
+        bbishop=loadImage("bbishop.png");
+        bking=loadImage("bking.png");
+        bqueen=loadImage("bqueen.png");
+        size(1201,801);
+        stroke(163,50,50);
+        board = new int[width/cellSize][height/cellSize];
+        line(0,0,1200,0);
+        line(0,1198,1200,1198);
+        line(0,0,0,1200);
+        line(1200,0,1200,1200);
+          for (int i=0; i<width/cellSize; i++) {
+            for (int j=0; j<height/cellSize; j++) {
+          stroke(0);
+          if (j%2 == i%2){    
+            fill(#964B00);
+          }
+            if (j%2 != i%2){
+          fill (#CAA472);
+          }
+          float state = 0;
+          if (j==1 && i>1 && i<10){
+            state = 1;
+          }
+            if (j==0){
+          if (i==2||i==9){
+          state=2;
+          }
+          if (i==3||i==8){
+          state=3;
+          }
+          if (i==4||i==7){
+          state=4;
+          }
+          if (i==5){
+          state=5;
+          }
+          if (i==6){
+          state=6;
+          }
+          }
+          if (j==height/cellSize-2 && i>1 && i<10){
+          state=7;
+          }
+            if (j==height/cellSize-1){
+          if (i==2||i==9){
+          state=8;
+          }
+          if (i==3||i==8){
+          state=9;
+          }
+          if (i==4||i==7){
+          state=10;
+          }
+          if (i==5){
+          state=11;
+          }
+          if (i==6){
+          state=12;
+          }
+          }
+          board[i][j] = int(state);
+              square((i*100),(j*100),100);
+        if (state == 1){ 
+        image(wpawn,i*100+11.5,j*100);
+        }
+        if (state == 2){
+        image(wrook,i*100+4.5,j*100);
+        }
+        if (state==3){
+        image(wnite,i*100,j*100);
+        }
+        if (state==4){
+        image(wbishop,i*100+.5,j*100);
+        }
+        if (state==6){
+        image(wqueen,i*100+1,j*100+5);
+        }
+        if (state==5){
+        image(wking,i*100+.5,j*100);
+        }
+        if (state == 7){ 
+        image(bpawn,i*100+11.5,j*100);
+        }
+        if (state == 8){
+        image(brook,i*100+4.5,j*100);
+        }
+        if (state==9){
+        image(bnite,i*100,j*100);
+        }
+        if (state==10){
+        image(bbishop,i*100+.5,j*100);
+        }
+        if (state==12){
+        image(bqueen,i*100+1,j*100+5);
+        }
+        if (state==11){
+        image(bking,i*100+.5,j*100);
+        }
+        }
+        }
+        }
+        void draw(){
+        }
+        void mousePressed(){
+          for (int i=0; i<width/cellSize; i++) {
+            for (int j=0; j<height/cellSize; j++) {
+              if (i%2!=j%2){
+              fill(#CAA472);
+              }
+              if (i%2==j%2){
+              fill(#964B00);
+              }
+              square((i*100),(j*100),100);     
+              if (mouseX/100==i){
+              if (mouseY/100==j){
+              if (selectedi == 0 && selectedj == 0){
+              selectedi=i;
+              selectedj=j;
+              }
+              else{
+                board[i][j]=board[selectedi][selectedj];
+                board[selectedi][selectedj] = 0;
+                square((selectedi*100),(selectedj*100),100);
+                selectedi=0;
+                selectedj=0;
+              }  
+          }
+              }
+        if (board[i][j] == 1){ 
+        image(wpawn,i*100+11.5,j*100);
+        }
+        if (board[i][j] == 2){
+        image(wrook,i*100+4.5,j*100);
+        }
+        if (board[i][j]==3){
+        image(wnite,i*100,j*100);
+        }
+        if (board[i][j]==4){
+        image(wbishop,i*100+.5,j*100);
+        }
+        if (board[i][j]==6){
+        image(wqueen,i*100+1,j*100+5);
+        }
+        if (board[i][j]==5){
+        image(wking,i*100+.5,j*100);
+        }
+          if (board[i][j] == 7){ 
+        image(bpawn,i*100+11.5,j*100);
+        }
+        if (board[i][j] == 8){
+        image(brook,i*100+4.5,j*100);
+        }
+        if (board[i][j]==9){
+        image(bnite,i*100,j*100);
+        }
+        if (board[i][j]==10){
+        image(bbishop,i*100+.5,j*100);
+        }
+        if (board[i][j]==12){
+        image(bqueen,i*100+1,j*100+5);
+        }
+        if (board[i][j]==11){
+        image(bking,i*100+.5,j*100);
+        }
+        }
+        }
+        }
+                                             
+'''
 </details>
