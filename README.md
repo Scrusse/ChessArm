@@ -77,6 +77,8 @@ These are all of the variables I used for the rack.
 
 Written by @Ashanks70
 
+![ChessBoard](CodingPictures/ChessBoard.png)
+
 <details>
 <summary>Code</summary>
 <br>
