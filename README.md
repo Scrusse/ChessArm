@@ -23,6 +23,7 @@ This project has a very simple list of requirements including:
 - Solenoid
 - 3-4 Stepper motors
 - Nuts and Bolts
+- Images in Coding Requirements which is under Coding Pictures.
 
 ## Cad Section
 
