@@ -560,7 +560,7 @@ void mousePressed() {
             selectedx = x;
             selectedy = y;
           }
-          else if(selectedx!=0 && selectedy!=0) {//if second click in pattern
+          else {//if second click in pattern
           if (board[x][y]!=0){//if new tile is occupied
           for (int j = 0; j <height/cellSize; j ++){
           if (board[x][y]<=6){//if color is white
