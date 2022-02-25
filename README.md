@@ -58,6 +58,22 @@ For the king, I think I had a really good idea. The plan was to make the crown b
 
 ### Robot Arm & Box
 
+This section was the most time-consuming because of all of the measurements that needed to be taken to match the size I wanted the robot arm to be in real life. I also made the decision to laser cut every wall for the arm and the box. The bad part about that is that I have to create a t-slot joint for every corner that 2 walls need to be connected by. In order to create a t-slot, I need a laser joint for each corner. To put laser joints on the corners, I need to have the corners intersecting. There are a lot of steps to creating t-slot joints and I needed to make a lot of them. Each of the parts below might look simple but as I encoutered physical problems with our project ideas, I had to change a significant amount of parts of the box to make it fit the requirements for the arm to actually work.
+
+The box from this view may look simple, but there are a lot of parts inside and each dimension is it's value for a reason. The two holes on the bottom are to connect the arduino to a power source (a computer). The reason it isn't a single hole is because of the t-slot joints get in the way. If I connected the two holes then there wouldn't be enough room for a t-slot joint in that position. The back of the box isnt any different than the other walls and the floor is completely flat.
+
+![WholeBox](https://user-images.githubusercontent.com/71349940/155800987-5cff3ccb-28af-4b81-bb1f-9413485424de.png)
+
+In this image, the top walls of the box are hidden. The arm casing is visible and so are the inside walls. Below this image is an explination on the arm casing. The inside walls are there to hold the gears that will be connected to the stepper motors. There are two on each side so that motors can fit flush against a wall aswell as hold the gear up-right.
+
+![InsideOfBox](https://user-images.githubusercontent.com/71349940/155800105-9dc5aa37-09f9-4f5b-9914-9b543ac6318b.png)
+
+This is the arm casing. Inside the bottom section there will be two stepper motors pointing outwards connected to the the gear in the slots on the outside. In the top section there is another wall separating a motor and a gear. The motor will not be connected to anything so it will move the gear and therefore be moved with it.
+
+![ArmCasing](https://user-images.githubusercontent.com/71349940/155800486-81b003b6-86c4-4d47-a77c-29e96622815a.png)
+
+
+
 ### Rack & Pinion Designing
 
 The gear has probably given me the most problems so far. Getting a gear to fit properly on a rack. The rack has to fit perfectly on the teeth of the gear, otherwise it could cause too much wobbling. The gear was simpler than I had first anticepated because I could just simply use a custom onshape feature that allows me to create one with just information about the dimensions. Though, before I figured that out, I had spent a good week trying to find a proper gear generator online. It didn't go well. After I made the gear, the last thing to do was make the rack. Easier said than done. Long story short, I had to watch a tutorial on how to create a rack and pinion in onshape and copy the exact dimensions. The problem was that I wanted it to be a different size than it was in the tutorial. What I did was I created a variable for every dimension on one section of the rack and related each one to the diameter the gear's pitch circle diameter (example: variable #a = #PitchCircleDiameter/1.6). This way I could change the variable for the gear's diameter (which is what I wanted to change) and at the same time change the size of the rack flawlessly. I think it ended up working out, but it was a lot of work for just a rack and pinion.
@@ -71,7 +87,9 @@ The sketch for the rack is shown below.
 
 ![Rack Sketch](ChessPieces/RackSketch.png)
 
-These are all of the variables I used for the rack.
+These are all of the variables I used for the rack. There are no variable names because I didn't find them necessary at the time and they weren't needed for the purpose i was using them for.
+
+![Rack and Pinion Variables](https://user-images.githubusercontent.com/71349940/155779804-7fbde527-f317-4211-807f-26caddb66358.png)
 
 
 ## Coding Section
