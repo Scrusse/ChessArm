@@ -33,7 +33,7 @@ In this project, I didn't want to just brush by the designing aspect and rip som
 
 
 <details>
-<summary>Chess Pieces</summary>
+<summary>Chess Pieces | Images & Description</summary>
 <br>
         The images below are of the pawn, the first piece I made. I made this completely from scratch using no reference images. Splines, while they are the worst lines in existance, were my only choice here. I just messed around with some ovals and splines and got what is shown here.
 
@@ -65,6 +65,13 @@ For the king, I think I had a really good idea. The plan was to make the crown b
 
 This section was the most time-consuming because of all of the measurements that needed to be taken to match the size I wanted the robot arm to be in real life. I also made the decision to laser cut every wall for the arm and the box. The bad part about that is that I have to create a t-slot joint for every corner that 2 walls need to be connected by. In order to create a t-slot, I need a laser joint for each corner. To put laser joints on the corners, I need to have the corners intersecting. There are a lot of steps to creating t-slot joints and I needed to make a lot of them. Each of the parts below might look simple but as I encoutered physical problems with our project ideas, I had to change a significant amount of parts of the box to make it fit the requirements for the arm to actually work.
 
+<details>
+<summary>Arm & Box | Images & Descriptions</summary>
+<br>
+        <details>
+        <summary>Febuary 25th</summary>
+        <br>
+        
 The box from this view may look simple, but there are a lot of parts inside and each dimension is it's value for a reason. The two holes on the bottom are to connect the arduino to a power source (a computer). The reason it isn't a single hole is because of the t-slot joints get in the way. If I connected the two holes then there wouldn't be enough room for a t-slot joint in that position. The back of the box isnt any different than the other walls and the floor is completely flat.
 
 ![WholeBox](https://user-images.githubusercontent.com/71349940/155800987-5cff3ccb-28af-4b81-bb1f-9413485424de.png)
@@ -76,8 +83,8 @@ In this image, the top walls of the box are hidden. The arm casing is visible an
 This is the arm casing. Inside the bottom section there will be two stepper motors pointing outwards connected to the the gear in the slots on the outside. In the top section there is another wall separating a motor and a gear. The motor will not be connected to anything so it will move the gear and therefore be moved with it.
 
 ![ArmCasing](https://user-images.githubusercontent.com/71349940/155800486-81b003b6-86c4-4d47-a77c-29e96622815a.png)
-
-
+        <br>
+</details>
 
 ### Rack & Pinion Designing
 
