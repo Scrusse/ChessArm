@@ -425,351 +425,797 @@ The coding was very hard. I could almost not get the stepper motors to work. Som
 <details>
 <summary>code with comments</summary>
         
-        //build basic board
-//draw the 2D array
-int[][] board;
-//say how large each tile should be
-int cellSize =  100 ;
-//establish turn and move validity(needs improvement later)
-int turn = 0;
-int valid = 1;
-//previous click locations
-int selectedx = 0;
-int selectedy = 0;
-//load necessary images
-PImage wpawn;
-PImage wrook;
-PImage wknight;
-PImage wbishop;
-PImage wking;
-PImage wqueen;
-PImage bpawn;
-PImage brook;
-PImage bknight;
-PImage bbishop;
-PImage bking;
-PImage bqueen;
-void setup() {
-  //actually loads images as pictures from files
-  wpawn = loadImage("wpawn.png");//pieceType 1
-  wrook = loadImage("wrook.png");//pieceType 2
-  wknight = loadImage("wknight.png");//pieceType 3
-  wbishop = loadImage("wbishop.png");//pieceType 4
-  wking = loadImage("wking.png");//pieceType 5
-  wqueen = loadImage("wqueen.png");//pieceType 6
-  bpawn = loadImage("bpawn.png");//pieceType 7
-  brook = loadImage("brook.png");//pieceType 8
-  bknight = loadImage("bknight.png");//pieceType 9
-  bbishop = loadImage("bbishop.png");//pieceType 10
-  bking = loadImage("bking.png");//pieceType 11
-  bqueen = loadImage("bqueen.png");//pieceType 12
-  //load the board as a tile
-  size(1201, 801);
-  //set line/border color to black
-  stroke(163, 50, 50);
-  board = new int[width/cellSize][height/cellSize];
-  //look at every tile and draw them and the pieces
-  for (int x = 0; x < width/cellSize; x ++ ) {
-    for (int y =0; y <height/cellSize; y ++ ) {
-      stroke(0);
-      if (y % 2 == x % 2) {//check for is tile every other
-        fill(#964B00);//set fill accordingly
-      }
-      if (y % 2 != x % 2) {//check for it tile every other 
-        fill (#CAA472);//set fill accordingly
-      }
-      float pieceType = 0;//establishes type of piece
-      if (y == height/cellSize-2 && x > 1 && x < 10) { //white pawn row
-        pieceType = 1;
-      }
-      if (y == height/cellSize-1) {//set up back white row 
-        if (x == 2||x == 9) {//check for white Rook tiles
-          pieceType = 2;
-        }
-        if (x == 3||x == 8) {//check for white knight tiles
-          pieceType = 3;
-        }
-        if (x == 4||x == 7) {//check for white bishop tiles
-          pieceType = 4;
-        }
-        if (x == 5) {//check for white king space
-          pieceType = 5;
-        }
-        if (x == 6) {//check for white queen space
-          pieceType = 6;
-        }
-      }
-      if (y == 1 && x > 1 && x < 10) {//black pawn row
-        pieceType = 7;
-      }
-      if (y == 0) {
-        if (x == 2||x == 9) {//black rooks
-          pieceType = 8;
-        }
-        if (x == 3||x == 8) {//black knights
-          pieceType = 9;
-        }
-        if (x == 4||x == 7) {//black bishops
-          pieceType = 10;
-        }
-        if (x == 5) {//black king
-          pieceType = 11;
-        }
-        if (x == 6) {//black queen
-          pieceType = 12;
-        }
-      }
-      board[x][y] = int(pieceType);//saves the piece value to the point on the 2D array
-      square((x * 100), (y * 100), 100 );//draw tile in the correct color
-      //place image based on chosen identity
-      if (pieceType == 1) { //pawn
-        image(wpawn, x * 100 + 11.5, y * 100);
-      }
-      if (pieceType == 2) {//white rook
-        image(wrook, x * 100 + 4.5, y * 100);
-      }
-      if (pieceType == 3) {//white knight
-        image(wknight, x * 100, y * 100);
-      }
-      if (pieceType == 4) {//white bishop
-        image(wbishop, x * 100 + .5, y * 100);
-      }
-      if (pieceType==6) {//white queen
-        image(wqueen, x * 100 + 1, y * 100 + 5);
-      }
-      if (pieceType==5) {//white king
-        image(wking, x * 100 + .5, y * 100);
-      }
-      if (pieceType == 7) { //black pawn
-        image(bpawn, x * 100 + 11.5, y * 100);
-      }
-      if (pieceType == 8) {//black rook
-        image(brook, x * 100 + 4.5, y * 100);
-      }
-      if (pieceType==9) {//black knight
-        image(bknight, x * 100, y * 100);
-      }
-      if (pieceType==10) {//black bishop
-        image(bbishop, x * 100 + .5, y * 100);
-      }
-      if (pieceType==12) {//black queen
-        image(bqueen, x * 100 + 1, y * 100 + 5);
-      }
-      if (pieceType==11) {//black king
-        image(bking, x * 100 + .5, y * 100);
-      }
-    }
-  }
-}
-void draw() {
-}
-void mousePressed() {
-  //look at each tile, redraw it, then look for mouse and see if it hits a piece
-  for (int x =0; x <width/cellSize; x ++ ) {//check for each x
-    for (int y =0; y <height/cellSize; y ++ ) {//check for each y in each x
-      if (x %2!=y %2) {//check for every other, then set fill
-        fill(#CAA472);
-      }
-      if (x %2==y %2) {//check for every other then set fill
-        fill(#964B00);
-      }
-      square((x * 100), (y * 100), 100 );//redraw current tile
-      if (mouseX/ 100 == x ) {//if hits x-location of mouse
-        if (mouseY/ 100 == y ) {//if hits y-location of mouse
-          if (selectedx == 0 && selectedy == 0) {//if first click in pattern
-            selectedx = x;
-            selectedy = y;
-          }
-          else {//if second click in pattern
-          if (board[x][y]!=0){//if new tile is occupied
-          for (int j = 0; j <height/cellSize; j ++){
-          if (board[x][y]<=6){//if color is white
-          if (board[x][y]==1){//if tile is a pawn
-          if (board[1][j]==0){//if space is empty
-          board[1][j]=board[x][y];//set empty space equal to current click
-          print(1,",",j," ");//tell me where you moved
-          break;//end looping
-          }
-          }
-          else{
-          if (board[0][j]==0){//if in back white row
-          board[0][j]=board[x][y];
-          print(0,",",j," ");//tell me where you moved
-          break;//end looping
-          }
-          }
-          }
-          if (board[x][y]>6){//if color is black
-          if (board[x][y]==1){//if tile is a pawn
-          if (board[9][j]==0){//if space is empty
-          board[9][j]=board[x][y];//set empty space equal to current click
-          print(9,",",j," ");//tell me where you moved
-          break;//end looping
-          }
-          }
-          else if (board[x][y]!=1){
-          if (board[10][j]==0){//if in back black row
-          board[10][j]=board[x][y];//set back tile to current tile identity
-          print(10,",",j," ");//tell me where you moved
-          break;//end looping
-          }
-          }
-          }
-          }
-          }
-            board[x][y]=board[selectedx][selectedy];//set current click to the tile type of last click
-            board[selectedx][selectedy] = 0;//set the previous click to a blank space
-            if (selectedx %2 == selectedy %2) {// if every other for previous click
-              fill(#964B00);
-            } else {//if every other for previous click
-              fill(#CAA472);
-            }
-            square((selectedx * 100), (selectedy * 100), 100 );//redraw tile that was abandoned
-            selectedx =0;//set the old x and y to zero
-            selectedy =0;
-          }
-        }
-      }
-      if (board[x][y] == 1) { //draw tile based on stored value
-        image(wpawn, x * 100 + 11.5, y * 100);//white pawn
-      }
-      if (board[x][y] == 2) {
-        image(wrook, x * 100 + 4.5, y * 100);//white rook
-      }
-      if (board[x][y]==3) {
-        image(wknight, x * 100, y * 100);//white knight
-      }
-      if (board[x][y]==4) {
-        image(wbishop, x * 100 + .5, y * 100);//white bishop
-      }
-      if (board[x][y]==6) {
-        image(wqueen, x * 100 + 1, y * 100 + 5);//white queen
-      }
-      if (board[x][y]==5) {
-        image(wking, x * 100 + .5, y * 100);//white king
-      }
-      if (board[x][y] == 7) { 
-        image(bpawn, x * 100 + 11.5, y * 100);//black pawn
-      }
-      if (board[x][y] == 8) {
-        image(brook, x * 100 + 4.5, y * 100);//black rook
-      }
-      if (board[x][y]==9) {
-        image(bknight, x * 100, y * 100);//black knight
-      }
-      if (board[x][y]==10) {
-        image(bbishop, x * 100 + .5, y * 100);//black bishop
-      }
-      if (board[x][y]==12) {
-        image(bqueen, x * 100 + 1, y * 100 + 5);//black queen
-      }
-      if (board[x][y]==11) {
-        image(bking, x * 100 + .5, y * 100);//black king
-      }
-    }
-  }
-  }
-//reset simulation locations
-void keyPressed() {
-  if (key==' ') {//reset previous mouse click(used to clear on glitch or double click/cancel)
-    selectedx =0;//reset stored x
-    selectedy =0;//reset stored y
-  }
-  if (key=='r' || key == 'R') {//if r key is hit rebuild simulation from start
-    for (int x =0; x <width/cellSize; x ++ ) {//run through each tile
-      for (int y =0; y <height/cellSize; y ++ ) {
-        if (y %2 == x %2) {//build checkerboard pattern
-          fill(#964B00);
-        }
-        if (y %2 != x %2) {//build checkerboard pattern
-          fill (#CAA472);
-        }
-        float pieceType = 0;//change piece values
-        if (y ==height/cellSize-2 && x >1 && x <10) {//white pawn
-          pieceType = 1;
-        }
-        if (y ==height/cellSize-1) {//white line
-          if (x ==2||x ==9) {//white rook
-            pieceType=2;
-          }
-          if (x ==3||x ==8) {//white knight
-            pieceType=3;
-          }
-          if (x ==4||x ==7) {//white bishop
-            pieceType=4;
-          }
-          if (x ==5) {//white king
-            pieceType=5;
-          }
-          if (x ==6) {//white queen
-            pieceType=6;
-          }
-        }
-        if (y ==1 && x >1 && x <10) {//black pawn line
-          pieceType=7;
-        }
-        if (y ==0) {//other black line
-          if (x ==2||x ==9) {//black rook
-            pieceType=8;
-          }
-          if (x ==3||x ==8) {//black knight
-            pieceType=9;
-          }
-          if (x ==4||x ==7) {//black bishop
-            pieceType=10;
-          }
-          if (x ==5) {//black king
-            pieceType=11;
-          }
-          if (x ==6) {//black queen
-            pieceType=12;
-          }
-        }
-        board[x][y] = int(pieceType);//set board value to determined type
-        square((x * 100), (y * 100), 100 );//draw each tile
-        if (pieceType == 1) { //render pictures on tiles
-          image(wpawn, x * 100 + 11.5, y * 100);//white pawn
-        }
-        if (pieceType == 2) {//white rook
-          image(wrook, x * 100 + 4.5, y * 100);
-        }
-        if (pieceType==3) {//white knight
-          image(wknight, x * 100, y * 100);
-        }
-        if (pieceType==4) {//white bishop
-          image(wbishop, x * 100 + .5, y * 100);
-        }
-        if (pieceType==6) {//white queen
-          image(wqueen, x * 100 + 1, y * 100 + 5);
-        }
-        if (pieceType==5) {//white king
-          image(wking, x * 100 + .5, y * 100);
-        }
-        if (pieceType == 7) { //black pawn
-          image(bpawn, x * 100 + 11.5, y * 100);
-        }
-        if (pieceType == 8) {//black rook
-          image(brook, x * 100 + 4.5, y * 100);
-        }
-        if (pieceType==9) {//black knight
-          image(bknight, x * 100, y * 100);
-        }
-        if (pieceType==10) {//black bishop
-          image(bbishop, x * 100 + .5, y * 100);
-        }
-        if (pieceType==12) {//black queen
-          image(bqueen, x * 100 + 1, y * 100 + 5);
-        }
-        if (pieceType==11) {//black king
-          image(bking, x * 100 + .5, y * 100);
-        }
-      }
-    }
-  }
-}
-                                            
+                        //build basic board
+                //draw the 2D array
+                int[][] board;
+                //say how large each tile should be
+                int cellSize =  100 ;
+                //establish turn and move validity(needs improvement later)
+                int turn = 0;
+                int valid = 1;
+                //previous click locations
+                int selectedx = 0;
+                int selectedy = 0;
+                //load necessary images
+                PImage wpawn;
+                PImage wrook;
+                PImage wknight;
+                PImage wbishop;
+                PImage wking;
+                PImage wqueen;
+                PImage bpawn;
+                PImage brook;
+                PImage bknight;
+                PImage bbishop;
+                PImage bking;
+                PImage bqueen;
+                void setup() {
+                  //actually loads images as pictures from files
+                  wpawn = loadImage("wpawn.png");//pieceType 1
+                  wrook = loadImage("wrook.png");//pieceType 2
+                  wknight = loadImage("wknight.png");//pieceType 3
+                  wbishop = loadImage("wbishop.png");//pieceType 4
+                  wking = loadImage("wking.png");//pieceType 5
+                  wqueen = loadImage("wqueen.png");//pieceType 6
+                  bpawn = loadImage("bpawn.png");//pieceType 7
+                  brook = loadImage("brook.png");//pieceType 8
+                  bknight = loadImage("bknight.png");//pieceType 9
+                  bbishop = loadImage("bbishop.png");//pieceType 10
+                  bking = loadImage("bking.png");//pieceType 11
+                  bqueen = loadImage("bqueen.png");//pieceType 12
+                  //load the board as a tile
+                  size(1201, 801);
+                  //set line/border color to black
+                  stroke(163, 50, 50);
+                  board = new int[width/cellSize][height/cellSize];
+                  //look at every tile and draw them and the pieces
+                  for (int x = 0; x < width/cellSize; x ++ ) {
+                    for (int y =0; y <height/cellSize; y ++ ) {
+                      stroke(0);
+                      if (y % 2 == x % 2) {//check for is tile every other
+                        fill(#964B00);//set fill accordingly
+                      }
+                      if (y % 2 != x % 2) {//check for it tile every other 
+                        fill (#CAA472);//set fill accordingly
+                      }
+                      float pieceType = 0;//establishes type of piece
+                      if (y == height/cellSize-2 && x > 1 && x < 10) { //white pawn row
+                        pieceType = 1;
+                      }
+                      if (y == height/cellSize-1) {//set up back white row 
+                        if (x == 2||x == 9) {//check for white Rook tiles
+                          pieceType = 2;
+                        }
+                        if (x == 3||x == 8) {//check for white knight tiles
+                          pieceType = 3;
+                        }
+                        if (x == 4||x == 7) {//check for white bishop tiles
+                          pieceType = 4;
+                        }
+                        if (x == 5) {//check for white king space
+                          pieceType = 5;
+                        }
+                        if (x == 6) {//check for white queen space
+                          pieceType = 6;
+                        }
+                      }
+                      if (y == 1 && x > 1 && x < 10) {//black pawn row
+                        pieceType = 7;
+                      }
+                      if (y == 0) {
+                        if (x == 2||x == 9) {//black rooks
+                          pieceType = 8;
+                        }
+                        if (x == 3||x == 8) {//black knights
+                          pieceType = 9;
+                        }
+                        if (x == 4||x == 7) {//black bishops
+                          pieceType = 10;
+                        }
+                        if (x == 5) {//black king
+                          pieceType = 11;
+                        }
+                        if (x == 6) {//black queen
+                          pieceType = 12;
+                        }
+                      }
+                      board[x][y] = int(pieceType);//saves the piece value to the point on the 2D array
+                      square((x * 100), (y * 100), 100 );//draw tile in the correct color
+                      //place image based on chosen identity
+                      if (pieceType == 1) { //pawn
+                        image(wpawn, x * 100 + 11.5, y * 100);
+                      }
+                      if (pieceType == 2) {//white rook
+                        image(wrook, x * 100 + 4.5, y * 100);
+                      }
+                      if (pieceType == 3) {//white knight
+                        image(wknight, x * 100, y * 100);
+                      }
+                      if (pieceType == 4) {//white bishop
+                        image(wbishop, x * 100 + .5, y * 100);
+                      }
+                      if (pieceType==6) {//white queen
+                        image(wqueen, x * 100 + 1, y * 100 + 5);
+                      }
+                      if (pieceType==5) {//white king
+                        image(wking, x * 100 + .5, y * 100);
+                      }
+                      if (pieceType == 7) { //black pawn
+                        image(bpawn, x * 100 + 11.5, y * 100);
+                      }
+                      if (pieceType == 8) {//black rook
+                        image(brook, x * 100 + 4.5, y * 100);
+                      }
+                      if (pieceType==9) {//black knight
+                        image(bknight, x * 100, y * 100);
+                      }
+                      if (pieceType==10) {//black bishop
+                        image(bbishop, x * 100 + .5, y * 100);
+                      }
+                      if (pieceType==12) {//black queen
+                        image(bqueen, x * 100 + 1, y * 100 + 5);
+                      }
+                      if (pieceType==11) {//black king
+                        image(bking, x * 100 + .5, y * 100);
+                      }
+                    }
+                  }
+                }
+                void draw() {
+                }
+                void mousePressed() {
+                  //look at each tile, redraw it, then look for mouse and see if it hits a piece
+                  for (int x =0; x <width/cellSize; x ++ ) {//check for each x
+                    for (int y =0; y <height/cellSize; y ++ ) {//check for each y in each x
+                      if (x %2!=y %2) {//check for every other, then set fill
+                        fill(#CAA472);
+                      }
+                      if (x %2==y %2) {//check for every other then set fill
+                        fill(#964B00);
+                      }
+                      square((x * 100), (y * 100), 100 );//redraw current tile
+                      if (mouseX/ 100 == x ) {//if hits x-location of mouse
+                        if (mouseY/ 100 == y ) {//if hits y-location of mouse
+                          if (selectedx == 0 && selectedy == 0) {//if first click in pattern
+                            selectedx = x;
+                            selectedy = y;
+                          }
+                          else {//if second click in pattern
+                          if (board[x][y]!=0){//if new tile is occupied
+                          for (int j = 0; j <height/cellSize; j ++){
+                          if (board[x][y]<=6){//if color is white
+                          if (board[x][y]==1){//if tile is a pawn
+                          if (board[1][j]==0){//if space is empty
+                          board[1][j]=board[x][y];//set empty space equal to current click
+                          print(1,",",j," ");//tell me where you moved
+                          break;//end looping
+                          }
+                          }
+                          else{
+                          if (board[0][j]==0){//if in back white row
+                          board[0][j]=board[x][y];
+                          print(0,",",j," ");//tell me where you moved
+                          break;//end looping
+                          }
+                          }
+                          }
+                          if (board[x][y]>6){//if color is black
+                          if (board[x][y]==1){//if tile is a pawn
+                          if (board[9][j]==0){//if space is empty
+                          board[9][j]=board[x][y];//set empty space equal to current click
+                          print(9,",",j," ");//tell me where you moved
+                          break;//end looping
+                          }
+                          }
+                          else if (board[x][y]!=1){
+                          if (board[10][j]==0){//if in back black row
+                          board[10][j]=board[x][y];//set back tile to current tile identity
+                          print(10,",",j," ");//tell me where you moved
+                          break;//end looping
+                          }
+                          }
+                          }
+                          }
+                          }
+                            board[x][y]=board[selectedx][selectedy];//set current click to the tile type of last click
+                            board[selectedx][selectedy] = 0;//set the previous click to a blank space
+                            if (selectedx %2 == selectedy %2) {// if every other for previous click
+                              fill(#964B00);
+                            } else {//if every other for previous click
+                              fill(#CAA472);
+                            }
+                            square((selectedx * 100), (selectedy * 100), 100 );//redraw tile that was abandoned
+                            selectedx =0;//set the old x and y to zero
+                            selectedy =0;
+                          }
+                        }
+                      }
+                      if (board[x][y] == 1) { //draw tile based on stored value
+                        image(wpawn, x * 100 + 11.5, y * 100);//white pawn
+                      }
+                      if (board[x][y] == 2) {
+                        image(wrook, x * 100 + 4.5, y * 100);//white rook
+                      }
+                      if (board[x][y]==3) {
+                        image(wknight, x * 100, y * 100);//white knight
+                      }
+                      if (board[x][y]==4) {
+                        image(wbishop, x * 100 + .5, y * 100);//white bishop
+                      }
+                      if (board[x][y]==6) {
+                        image(wqueen, x * 100 + 1, y * 100 + 5);//white queen
+                      }
+                      if (board[x][y]==5) {
+                        image(wking, x * 100 + .5, y * 100);//white king
+                      }
+                      if (board[x][y] == 7) { 
+                        image(bpawn, x * 100 + 11.5, y * 100);//black pawn
+                      }
+                      if (board[x][y] == 8) {
+                        image(brook, x * 100 + 4.5, y * 100);//black rook
+                      }
+                      if (board[x][y]==9) {
+                        image(bknight, x * 100, y * 100);//black knight
+                      }
+                      if (board[x][y]==10) {
+                        image(bbishop, x * 100 + .5, y * 100);//black bishop
+                      }
+                      if (board[x][y]==12) {
+                        image(bqueen, x * 100 + 1, y * 100 + 5);//black queen
+                      }
+                      if (board[x][y]==11) {
+                        image(bking, x * 100 + .5, y * 100);//black king
+                      }
+                    }
+                  }
+                  }
+                //reset simulation locations
+                void keyPressed() {
+                  if (key==' ') {//reset previous mouse click(used to clear on glitch or double click/cancel)
+                    selectedx =0;//reset stored x
+                    selectedy =0;//reset stored y
+                  }
+                  if (key=='r' || key == 'R') {//if r key is hit rebuild simulation from start
+                    for (int x =0; x <width/cellSize; x ++ ) {//run through each tile
+                      for (int y =0; y <height/cellSize; y ++ ) {
+                        if (y %2 == x %2) {//build checkerboard pattern
+                          fill(#964B00);
+                        }
+                        if (y %2 != x %2) {//build checkerboard pattern
+                          fill (#CAA472);
+                        }
+                        float pieceType = 0;//change piece values
+                        if (y ==height/cellSize-2 && x >1 && x <10) {//white pawn
+                          pieceType = 1;
+                        }
+                        if (y ==height/cellSize-1) {//white line
+                          if (x ==2||x ==9) {//white rook
+                            pieceType=2;
+                          }
+                          if (x ==3||x ==8) {//white knight
+                            pieceType=3;
+                          }
+                          if (x ==4||x ==7) {//white bishop
+                            pieceType=4;
+                          }
+                          if (x ==5) {//white king
+                            pieceType=5;
+                          }
+                          if (x ==6) {//white queen
+                            pieceType=6;
+                          }
+                        }
+                        if (y ==1 && x >1 && x <10) {//black pawn line
+                          pieceType=7;
+                        }
+                        if (y ==0) {//other black line
+                          if (x ==2||x ==9) {//black rook
+                            pieceType=8;
+                          }
+                          if (x ==3||x ==8) {//black knight
+                            pieceType=9;
+                          }
+                          if (x ==4||x ==7) {//black bishop
+                            pieceType=10;
+                          }
+                          if (x ==5) {//black king
+                            pieceType=11;
+                          }
+                          if (x ==6) {//black queen
+                            pieceType=12;
+                          }
+                        }
+                        board[x][y] = int(pieceType);//set board value to determined type
+                        square((x * 100), (y * 100), 100 );//draw each tile
+                        if (pieceType == 1) { //render pictures on tiles
+                          image(wpawn, x * 100 + 11.5, y * 100);//white pawn
+                        }
+                        if (pieceType == 2) {//white rook
+                          image(wrook, x * 100 + 4.5, y * 100);
+                        }
+                        if (pieceType==3) {//white knight
+                          image(wknight, x * 100, y * 100);
+                        }
+                        if (pieceType==4) {//white bishop
+                          image(wbishop, x * 100 + .5, y * 100);
+                        }
+                        if (pieceType==6) {//white queen
+                          image(wqueen, x * 100 + 1, y * 100 + 5);
+                        }
+                        if (pieceType==5) {//white king
+                          image(wking, x * 100 + .5, y * 100);
+                        }
+                        if (pieceType == 7) { //black pawn
+                          image(bpawn, x * 100 + 11.5, y * 100);
+                        }
+                        if (pieceType == 8) {//black rook
+                          image(brook, x * 100 + 4.5, y * 100);
+                        }
+                        if (pieceType==9) {//black knight
+                          image(bknight, x * 100, y * 100);
+                        }
+                        if (pieceType==10) {//black bishop
+                          image(bbishop, x * 100 + .5, y * 100);
+                        }
+                        if (pieceType==12) {//black queen
+                          image(bqueen, x * 100 + 1, y * 100 + 5);
+                        }
+                        if (pieceType==11) {//black king
+                          image(bking, x * 100 + .5, y * 100);
+                        }
+                      }
+                    }
+                  }
+                }
+
 </details>
-         
+         <details>
+                 <summary>Final Code!</summary>
+                 <details>
+                                         <summary>Processing</summary>
+                         
+                import processing.serial.*;//connect to arduino
+                Serial myPort;  // Create object from Serial class
+                String val;     // Data received from the serial port
+                //build basic board
+                //draw the 2D array
+                int x;
+                int y;
+                int[][] board;
+                //say how large each tile should be
+                int cellSize =  100 ;
+                //establish turn and move validity(needs improvement later)
+                int turn = 0;
+                int valid = 1;
+                //previous click locations
+                int selectedx = 0;
+                int selectedy = 0;
+                //load necessary images
+                PImage wpawn;
+                PImage wrook;
+                PImage wknight;
+                PImage wbishop;
+                PImage wking;
+                PImage wqueen;
+                PImage bpawn;
+                PImage brook;
+                PImage bknight;
+                PImage bbishop;
+                PImage bking;
+                PImage bqueen;
+                void pieceMoved(int piece, int x, int y) {//records the piece I moved
+                  char state='E';
+                  if (piece==1||piece==7) {//is a pawn
+                    state='P';// set to pawn symbol
+                  }
+                  if (piece==2||piece==8) {//if rook
+                    state='R';//set to rook symbol
+                  }
+                  if (piece==3||piece==9) {//if knight
+                    state='N';//set to knight symbol
+                  } 
+                  if (piece==4||piece==10) {//if bishop
+                    state='B';//set to bishop symbol
+                  } 
+                  if (piece==5||piece==11) {//if queen
+                    state='Q';//set to queen symbol
+                  } 
+                  if (piece==6||piece==12) {//if king
+                    state='K';//set to king symbol
+                  } 
+                  if (piece==0){//if tile is empty
+                  println("Empty",",",x,",",y);//say empty and coordinates
+                  }  
+                  else if (piece>6) {//if black
+                    println("Black", state, ",", x,",", y);//say black, piece type, and coordinates
+                  }
+                  else if (piece<7) {//if white
+                    println("White", state, ",", x,",", y);//sya white,piece type, and coordinates
+                  }
+                    myPort.write(x);
+                    println(x);
+                    delay(50);
+                    myPort.write(y);
+                    println(y);
+                }
+                void buildBoard() {//builds the board again
+                  for (int x = 0; x < width/cellSize; x ++ ) {
+                    for (int y =0; y <height/cellSize; y ++ ) {
+                      if (board[x][y] == 1) { //draw tile based on stored value
+                        image(wpawn, x * 100 + 11.5, y * 100);//white pawn
+                      }
+                      if (board[x][y] == 2) {
+                        image(wrook, x * 100 + 4.5, y * 100);//white rook
+                      }
+                      if (board[x][y]==3) {
+                        image(wknight, x * 100, y * 100);//white knight
+                      }
+                      if (board[x][y]==4) {
+                        image(wbishop, x * 100 + .5, y * 100);//white bishop
+                      }
+                      if (board[x][y]==5) {
+                        image(wqueen, x * 100 + 1, y * 100 + 5);//white queen
+                      }
+                      if (board[x][y]==6) {
+                        image(wking, x * 100 + .5, y * 100);//white king
+                      }
+                      if (board[x][y] == 7) { 
+                        image(bpawn, x * 100 + 11.5, y * 100);//black pawn
+                      }
+                      if (board[x][y] == 8) {
+                        image(brook, x * 100 + 4.5, y * 100);//black rook
+                      }
+                      if (board[x][y]==9) {
+                        image(bknight, x * 100, y * 100);//black knight
+                      }
+                      if (board[x][y]==10) {
+                        image(bbishop, x * 100 + .5, y * 100);//black bishop
+                      }
+                      if (board[x][y]==11) {
+                        image(bqueen, x * 100 + 1, y * 100 + 5);//black queen
+                      }
+                      if (board[x][y]==12) {
+                        image(bking, x * 100 + .5, y * 100);//black king
+                      }
+                    }
+                  }
+                }
+                void setup() {
+                    String portName = Serial.list()[1]; //change the 0 to a 1 or 2 etc. to match your port
+                  myPort = new Serial(this, portName, 9600);
+                      myPort.write('r');
+                  //actually loads images as pictures from files
+                  wpawn = loadImage("wpawn.png");//pieceType 1
+                  wrook = loadImage("wrook.png");//pieceType 2
+                  wknight = loadImage("wknight.png");//pieceType 3
+                  wbishop = loadImage("wbishop.png");//pieceType 4
+                  wking = loadImage("wking.png");//pieceType 5
+                  wqueen = loadImage("wqueen.png");//pieceType 6
+                  bpawn = loadImage("bpawn.png");//pieceType 7
+                  brook = loadImage("brook.png");//pieceType 8
+                  bknight = loadImage("bknight.png");//pieceType 9
+                  bbishop = loadImage("bbishop.png");//pieceType 10
+                  bking = loadImage("bking.png");//pieceType 11
+                  bqueen = loadImage("bqueen.png");//pieceType 12
+                  //load the board as a tile
+                  size(1201, 801);
+                  //set line/border color to black
+                  stroke(163, 50, 50);
+                  board = new int[width/cellSize][height/cellSize];
+                  //look at every tile and draw them and the pieces
+                  for (int x = 0; x < width/cellSize; x ++ ) {
+                    for (int y =0; y <height/cellSize; y ++ ) {
+                      stroke(0);
+                      if (y % 2 != x % 2) {//check for is tile every other
+                        fill(#964B00);//set fill accordingly
+                      }
+                      if (y % 2 == x % 2) {//check for it tile every other 
+                        fill (#CAA472);//set fill accordingly
+                      }
+                      if (x<2 || x>9) {
+                        fill(#989898);
+                      }
+                      float pieceType = 0;//establishes type of piece
+                      if (y == height/cellSize-2 && x > 1 && x < 10) { //white pawn row
+                        pieceType = 1;
+                      }
+                      if (y == height/cellSize-1) {//set up back white row 
+                        if (x == 2||x == 9) {//check for white Rook tiles
+                          pieceType = 2;
+                        }
+                        if (x == 3||x == 8) {//check for white knight tiles
+                          pieceType = 3;
+                        }
+                        if (x == 4||x == 7) {//check for white bishop tiles
+                          pieceType = 4;
+                        }
+                        if (x == 5) {//check for white king space
+                          pieceType = 5;
+                        }
+                        if (x == 6) {//check for white queen space
+                          pieceType = 6;
+                        }
+                      }
+                      if (y == 1 && x > 1 && x < 10) {//black pawn row
+                        pieceType = 7;
+                      }
+                      if (y == 0) {
+                        if (x == 2||x == 9) {//black rooks
+                          pieceType = 8;
+                        }
+                        if (x == 3||x == 8) {//black knights
+                          pieceType = 9;
+                        }
+                        if (x == 4||x == 7) {//black bishops
+                          pieceType = 10;
+                        }
+                        if (x == 5) {//black king
+                          pieceType = 11;
+                        }
+                        if (x == 6) {//black queen
+                          pieceType = 12;
+                        }
+                      }
+                      board[x][y] = int(pieceType);//saves the piece value to the point on the 2D array
+                      square((x * 100), (y * 100), 100 );//draw tile in the correct color
+                      //place image based on chosen identity
+                      buildBoard();//call board function
+                    }
+                  }
+                }
+                void draw() {
+                }
+                void mousePressed() {
+                  //look at each tile, redraw it, then look for mouse and see if it hits a piece
+                  for (int x =0; x <width/cellSize; x ++ ) {//check for each x
+                    for (int y =0; y <height/cellSize; y ++ ) {//check for each y in each x
+                      if (x %2==y %2) {//check for every other, then set fill
+                        fill(#CAA472);
+                      }
+                      if (x %2!=y %2) {//check for every other then set fill
+                        fill(#964B00);
+                      }
+                      if (x<2 || x>9) {
+                        fill(#989898);
+                      }
+                      square((x * 100), (y * 100), 100 );//redraw current tile
+                      if (mouseX/ 100 == x ) {//if hits x-location of mouse
+                        if (mouseY/ 100 == y ) {//if hits y-location of mouse
+                          if (selectedx == 0 && selectedy == 0) {//if first click in pattern
+                            selectedx = x;
+                            selectedy = y;
+                            pieceMoved(board[x][y], x, y);//prints piece moved and location
+                          } else {//if second click in pattern
+                            pieceMoved(board[x][y], x, y);//prints piece moved to and new location
+                            if (board[x][y]!=0) {//if new tile is occupied
+                              for (int j = 0; j <height/cellSize; j ++) {
+                                if (board[x][y]<=6) {//if color is white
+                                  if (board[x][y]==1) {//if tile is a pawn
+                                    if (board[1][j]==0) {//if space is empty
+                                      board[1][j]=board[x][y];//set empty space equal to current click
+                                      break;//end looping
+                                    }
+                                  } else {
+                                    if (board[0][j]==0) {//if in back white row
+                                      board[0][j]=board[x][y];
+                                      break;//end looping
+                                    }
+                                  }
+                                }
+                                if (board[x][y]>6) {//if color is black
+                                  if (board[x][y]==7) {//if tile is a pawn
+                                    if (board[10][j]==0) {//if space is empty
+                                      board[10][j]=board[x][y];//set empty space equal to current click
+                                      break;//end looping
+                                    }
+                                  }
+                                  if (board[x][y]>7) {
+                                    if (board[11][j]==0) {//if in back black row
+                                      board[11][j]=board[x][y];//set back tile to current tile identity
+                                      break;//end looping
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                            board[x][y]=board[selectedx][selectedy];//set current click to the tile type of last click
+                            board[selectedx][selectedy] = 0;//set the previous click to a blank space
+                            if (selectedx %2 != selectedy %2) {// if every other for previous click
+                              fill(#964B00);
+                            } else {//if every other for previous click
+                              fill(#CAA472);
+                            }
+                            if (selectedx<2 || selectedx>9) {
+                              fill(#989898);
+                            }
+                            square((selectedx * 100), (selectedy * 100), 100 );//redraw tile that was abandoned
+                            selectedx =0;//set the old x and y to zero
+                            selectedy =0;
+                          }
+                        }
+                      }
+                      buildBoard();//call board function
+                    }
+                  }
+                }
+                //reset simulation locations
+                void keyPressed() {
+                  if (key==' ') {//reset previous mouse click(used to clear on glitch or double click/cancel)
+                    selectedx =0;//reset stored x
+                    selectedy =0;//reset stored y
+                    myPort.write('r');
+                  }
+                  if (key=='r' || key == 'R') {//if r key is hit rebuild simulation from start
+                    for (int x =0; x <width/cellSize; x ++ ) {//run through each tile
+                      for (int y =0; y <height/cellSize; y ++ ) {
+                        if (y %2 != x %2) {//build checkerboard pattern
+                          fill(#964B00);
+                        }
+                        if (y %2 == x %2) {//build checkerboard pattern
+                          fill (#CAA472);
+                        }
+                        if (x<2 || x>9) {
+                          fill(#989898);
+                        }
+                        float pieceType = 0;//change piece values
+                        if (y ==height/cellSize-2 && x >1 && x <10) {//white pawn
+                          pieceType = 1;
+                        }
+                        if (y ==height/cellSize-1) {//white line
+                          if (x ==2||x ==9) {//white rook
+                            pieceType=2;
+                          }
+                          if (x ==3||x ==8) {//white knight
+                            pieceType=3;
+                          }
+                          if (x ==4||x ==7) {//white bishop
+                            pieceType=4;
+                          }
+                          if (x ==5) {//white king
+                            pieceType=5;
+                          }
+                          if (x ==6) {//white queen
+                            pieceType=6;
+                          }
+                        }
+                        if (y ==1 && x >1 && x <10) {//black pawn line
+                          pieceType=7;
+                        }
+                        if (y ==0) {//other black line
+                          if (x ==2||x ==9) {//black rook
+                            pieceType=8;
+                          }
+                          if (x ==3||x ==8) {//black knight
+                            pieceType=9;
+                          }
+                          if (x ==4||x ==7) {//black bishop
+                            pieceType=10;
+                          }
+                          if (x ==5) {//black king
+                            pieceType=11;
+                          }
+                          if (x ==6) {//black queen
+                            pieceType=12;
+                          }
+                        }
+                        board[x][y] = int(pieceType);//set board value to determined type
+                        square((x * 100), (y * 100), 100 );//draw each tile
+                        buildBoard();//call board function
+                      }
+                    }
+                  }
+                }
+                                                    
+</details>
+                         
+<details>
+<summary>Arduino</summary>
+                         
+                #include <Stepper.h>//include motor library
+                const int stepsPerRevolution = 200;
+                //store stepper 1(x movement)
+                Stepper X(stepsPerRevolution, 13, 9, 10, 12);
+                //store steppers 2/3 (y movement)
+                Stepper Y1(stepsPerRevolution, 2, 3, 8, 11);
+                Stepper Y2(stepsPerRevolution, 4, 5, 6, 7);
+                int XLocation = 0; //x-value of tile moved from
+                int YLocation = 0; //y-value of tile moved from
+                int currentX = 0; //x-value of tile moved to
+                int currentY = 0; //y-value of tile moved to
+                int YDistance;
+                int XDistance;
+                bool change = false;
+                const int cellSize = 200; //how far to travel to cross a cell
+                //on/off for magnet
+                bool magnetState = false;
+
+                void setup() {
+                  Serial.begin(9600);
+                  // put your setup code here, to run once:
+                  //store electromagnet input
+                  pinMode(A5, OUTPUT);
+                  digitalWrite(A5, LOW);
+                  X.setSpeed(60);//set rotations a second
+                  Y1.setSpeed(60);
+                  Y2.setSpeed(60);
+                }
+                void onArrival() { //when a move finishes
+                  if (magnetState == false) //toggles magnet state
+                  {
+                    magnetState = true;
+                    digitalWrite(A5, HIGH); //power electromagnet
+                  }
+                  else if (magnetState == true)
+                  {
+                    magnetState = false;
+                    digitalWrite(A5, LOW); //unpower electromagnet
+                  }
+                }
+                void movePiece(int moveX, int moveY) { //move pieces
+                  XDistance = (XLocation - moveX) * cellSize;
+                  YDistance = (YLocation - moveY) * cellSize;
+                  XLocation = moveX;//change the location of the magnet to the new space
+                  YLocation = moveY;
+                  if (XDistance == (2 * cellSize && YDistance == (1 * cellSize))) {//if a knight
+                    YDistance = (YDistance - cellSize);
+                    Y1.step(cellSize/2);//rotate one of the y-servos by a half cell to go to the middle
+                    Y2.step(cellSize/2);//do the same for the other
+                    X.step(XDistance);//move the distance on the x-axis
+                    Y1.step(YDistance);//finish the move for y
+                    Y2.step(YDistance);
+                  }
+                  else if (XDistance == (1 * cellSize) && YDistance == (2 * cellSize)) {//same but for other form of knight move
+                    XDistance = (XDistance - cellSize);
+                    X.step(cellSize);
+                    Y1.step(YDistance);
+                    Y2.step(YDistance);
+                    X.step(XDistance);
+                  }
+
+                  if (XDistance != 0) {//if the x changes
+                    X.step(XDistance);//move the x-distance
+                  }
+                  if (YDistance != 0) {//if y changes
+                    Y1.step(YDistance);//move y motors
+                    Y2.step(YDistance);
+                  }
+                  onArrival();//toggle magnet
+                }
+
+                void loop() {
+                  // put your main code here, to run repeatedly:
+                  //on input from processing(while serial free)
+                  if (Serial.available() == 1)
+                  {
+                    if (Serial.read() == 'r') {//if received r input
+                      XLocation = 0;//reset state
+                      YLocation = 0;
+                      currentX = 0;
+                      currentY = 0;
+                      movePiece(0,0);
+                    }
+                    //read values
+                    if (currentX == 0) {
+                      currentX = Serial.read();//if move made change x
+                    }
+                    else {
+                      currentY = Serial.read();// if move made change y
+                    }
+                    movePiece(currentX, currentY);//move the piece
+                    currentX = 0;//reset x
+                    //reset y
+                    currentY = 0;
+
+                  }
+                }
+
+                //move corresponding motors
+
+                //turn on/off magnet
+</details>
+                 
+                 
+
          
          
          
