@@ -96,7 +96,7 @@ These are all of the variables I used for the rack. There are no variable names 
 
 Written by @Ashanks70
 
-The coding was very hard. I could not get the stepper motors to work. One of the biggest difficulties was learning all of the processing syntax for arrays and shapes in order to load them.  The coding was fun to do and the processing syntax guide helped a lot(find below). The transmission from processing to arduino was difficult, and I made a few errors(such as only sending to arduino if the piece was black) but I got it to work eventually. While we did not finish, I feel like I came out of this project with more experience in different programming softwares in languages that will help me in my future projects.
+The coding was very hard. I could almost not get the stepper motors to work. Something I found out after 2 weeks of work was that, the digital pins 0 and 1 should NEVER be used for a stepper motor. One of the biggest difficulties was learning all of the processing syntax for arrays and shapes in order to load them.  The coding was fun to do and the processing syntax guide helped a lot(find below). The transmission from processing to arduino was difficult, and I made a few errors(such as only sending to arduino if the piece was black) but I got it to work eventually. While we did not finish, I feel like I came out of this project with more experience in different programming softwares in languages that will help me in my future projects.
 
 ![ChessBoard](CodingPictures/ChessBoard.png)
 
