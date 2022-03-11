@@ -83,7 +83,8 @@ In this image, the top walls of the box are hidden. The arm casing is visible an
 This is the arm casing. Inside the bottom section there will be two stepper motors pointing outwards connected to the the gear in the slots on the outside. In the top section there is another wall separating a motor and a gear. The motor will not be connected to anything so it will move the gear and therefore be moved with it.
 
 ![ArmCasing](https://user-images.githubusercontent.com/71349940/155800486-81b003b6-86c4-4d47-a77c-29e96622815a.png)
-        <br>
+        </details>
+                
 </details>
 
 ### Rack & Pinion Designing
