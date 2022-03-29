@@ -20,7 +20,7 @@ This project has a very simple list of requirements including:
 - 32 Small Neodymium Magnets
 - Adhesive Felt Sheet
 - Spray Paint
-- Solenoid
+- Electromagnet
 - 3-4 Stepper motors
 - Nuts and Bolts
 - Images in Coding Requirements which is under Coding Pictures.
