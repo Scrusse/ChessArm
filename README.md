@@ -113,6 +113,8 @@ The coding was very hard. I could almost not get the stepper motors to work. Som
 
 ![ChessBoard](CodingPictures/ChessBoard.png)
 
+^virtual chessboard
+
 <details>
 <summary>Code</summary>
 <br>
